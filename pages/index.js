@@ -79,11 +79,14 @@ export default function Home() {
               Search playlists by name
             </div>
           </div>
-          <div className={`w-full sm:w-8/12 lg:w-6/12 flex flex-row`}>
+          <div className={`w-full sm:w-8/12 lg:w-6/12 flex flex-row justify-center gap-4`}>
             <input
               ref={inputElem}
               placeholder={`${method === 'searchchannelname' ? 'Search Channel' : method === 'searchplaylistname' ?  'Search Playlist' : '...'}`}
               type='text'
+              onKeyUp={(e) => {
+                if (e.key == 'Enter') search();
+              }}
               className={`border-2 border-gray-300 focus:border-gray-500 outline-none text-gray-700 h-12 px-4 my-4 rounded-lg w-10/12`}
             />
             <a href="#" className={`bg-red-500 text-white leading-none my-4 p-4 rounded-lg active:bg-red-600`} onClick={search}>Search</a>

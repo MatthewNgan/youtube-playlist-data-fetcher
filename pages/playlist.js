@@ -20,19 +20,27 @@ export default function Playlist({ data }) {
         </div>
       </div>
       <div className={`h-full pt-16`}>
+        {/* <code>
+          {JSON.stringify(data.playlistitem)}
+        </code> */}
         {
           data.playlist.pageInfo.totalResults > 0 ?
           <div className={`container mx-auto my-4 p-4`}>
-            <div className={`flex flex-row align-middle`}>
+            <div className={`flex flex-row items-center`}>
               <img src={playlist.snippet.thumbnails.medium.url} className={`w-48 h-[6.75rem]`} />
-              <div className={`pl-4 flex flex-col justify-center`}>
+              <div className={`pl-4 flex flex-col justify-center gap-2`}>
                 <h1 className={`text-5xl font-bold`}>
                   {playlist.snippet.title}
                 </h1>
                 <div className={`text-gray-500`}>
-                  {playlist.snippet.description}
+                  {playlist.snippet.description || 'No description provided.'}
                 </div>
               </div>
+              {/* <Link href="#">
+                <a className={`ml-auto flex items-center p-3 border-2 border-red-500 rounded-lg text-red-500 hover:underline`}>
+                  Download All
+                </a>
+              </Link> */}
             </div>
           </div>
           : <h1>Error: Playlist not found.</h1>
@@ -59,20 +67,28 @@ export default function Playlist({ data }) {
               }
             </div>
             {
-              data.playlistitem.items.map(item => <div className={`py-4 border-b-2 border-red-500 flex flex-row w-full h-36`} key={item.id}>
+              data.playlistitem.items.map(item => <div className={`py-4 border-b-2 border-red-500 flex flex-row w-full min-h-36 max-h-48`} key={item.id}>
                 <Link href={`https://youtube.com/watch?v=${item.snippet.resourceId.videoId}`}>
-                  <img src={item.snippet.thumbnails.medium?.url || item.snippet.thumbnails.default?.url || ''} className={`h-[6.75rem] w-48 object-cover shrink-0 mt-auto mb-auto cursor-pointer`} />
+                  <img src={item.snippet.thumbnails.medium?.url || item.snippet.thumbnails.default?.url || ''} className={`h-[7.785rem] w-56 object-cover shrink-0 mt-auto mb-auto cursor-pointer`} />
                 </Link>
-                <div className={`flex flex-col ml-4 shrink`}>
+                <div className={`flex flex-col ml-4 min-w-0`}>
                   <Link href={`https://youtube.com/watch?v=${item.snippet.resourceId.videoId}`}>
                     <a>
                       <h3 className={`text-xl hover:underline`}>{item.snippet.title}</h3>
                     </a>
                   </Link>
-                  <div className={`text-gray-400 text-sm overflow-y-auto h-auto shrink`}>
+                  <div className={`text-gray-400 text-sm overflow-y-auto h-auto break-words`}>
                       {item.snippet.description}
                   </div>
-                  <div className={`mt-auto`}>Published At: {item.snippet.publishedAt}</div>
+                  <div className={`mt-auto flex flex-row gap-4`}>
+                    <div>
+                      Published At: {item.snippet.publishedAt}
+                    </div>
+                    <div>
+                      By: {item.snippet.channelTitle}
+                    </div>
+                  </div>
+                  <div></div>
                 </div>
               </div>)
             }
